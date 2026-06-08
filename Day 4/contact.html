@@ -1,0 +1,131 @@
+
+<h2 class="sr-only">Contact form with HTML5 validation — no JavaScript required</h2>
+<style>
+  .cf-wrap{max-width:520px;margin:2rem auto;background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:2rem 2rem 1.75rem}
+  .cf-head{margin:0 0 1.5rem}
+  .cf-head h1{font-size:20px;font-weight:500;margin:0 0 4px;color:var(--color-text-primary)}
+  .cf-head p{font-size:14px;color:var(--color-text-secondary);margin:0}
+  .cf-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .cf-field{display:flex;flex-direction:column;margin-bottom:1rem}
+  .cf-field label{font-size:13px;font-weight:500;color:var(--color-text-secondary);margin-bottom:5px;letter-spacing:.01em}
+  .cf-field label .req{color:#d85a30;margin-left:2px;font-weight:400}
+  .cf-field input,.cf-field textarea,.cf-field select{font-size:14px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);padding:8px 10px;background:var(--color-background-secondary);color:var(--color-text-primary);width:100%;box-sizing:border-box;transition:border-color .15s}
+  .cf-field input:focus,.cf-field textarea:focus,.cf-field select:focus{outline:none;border-color:var(--color-border-primary);box-shadow:0 0 0 2px rgba(55,138,221,.18)}
+  .cf-field input:invalid:not(:placeholder-shown),.cf-field textarea:invalid:not(:placeholder-shown){border-color:#d85a30;background:color-mix(in srgb,var(--color-background-secondary) 92%,#d85a30 8%)}
+  .cf-field input:valid:not(:placeholder-shown),.cf-field textarea:valid:not(:placeholder-shown){border-color:#1d9e75}
+  .cf-field textarea{resize:vertical;min-height:100px}
+  .cf-field select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23888' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;padding-right:30px}
+  .cf-hint{font-size:11.5px;color:var(--color-text-tertiary);margin-top:4px}
+  .cf-divider{border:none;border-top:0.5px solid var(--color-border-tertiary);margin:1.25rem 0}
+  .cf-footer{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
+  .cf-footer p{font-size:12px;color:var(--color-text-tertiary);margin:0}
+  .cf-submit{background:var(--color-text-primary);color:var(--color-background-primary);border:none;border-radius:var(--border-radius-md);padding:9px 22px;font-size:14px;font-weight:500;cursor:pointer;letter-spacing:.01em;transition:opacity .15s}
+  .cf-submit:hover{opacity:.85}
+  .cf-submit:active{opacity:.7;transform:scale(.98)}
+  .cf-badge{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;padding:4px 10px;border-radius:var(--border-radius-md);background:var(--color-background-success);color:var(--color-text-success);border:0.5px solid var(--color-border-success)}
+</style>
+
+<form class="cf-wrap" action="#" method="post" novalidate="">
+
+  <div class="cf-head">
+    <h1>Get in touch</h1>
+    <p>We'll reply within 1–2 business days.</p>
+  </div>
+
+  <div class="cf-row">
+    <div class="cf-field">
+      <label for="fname">First name <span class="req" aria-hidden="true">*</span></label>
+      <input
+        type="text"
+        id="fname"
+        name="first_name"
+        placeholder="Aarav"
+        required
+        minlength="2"
+        maxlength="50"
+        autocomplete="given-name"
+        pattern="[A-Za-z\s\-']+"
+        title="Letters, spaces, hyphens and apostrophes only"
+      >
+    </div>
+    <div class="cf-field">
+      <label for="lname">Last name <span class="req" aria-hidden="true">*</span></label>
+      <input
+        type="text"
+        id="lname"
+        name="last_name"
+        placeholder="Shah"
+        required
+        minlength="2"
+        maxlength="50"
+        autocomplete="family-name"
+        pattern="[A-Za-z\s\-']+"
+        title="Letters, spaces, hyphens and apostrophes only"
+      >
+    </div>
+  </div>
+
+  <div class="cf-field">
+    <label for="email">Email address <span class="req" aria-hidden="true">*</span></label>
+    <input
+      type="email"
+      id="email"
+      name="email"
+      placeholder="aarav@example.com"
+      required
+      maxlength="254"
+      autocomplete="email"
+    >
+    <span class="cf-hint">We'll never share your email.</span>
+  </div>
+
+  <div class="cf-field">
+    <label for="phone">Phone number</label>
+    <input
+      type="tel"
+      id="phone"
+      name="phone"
+      placeholder="+91 98765 43210"
+      pattern="[\+\d\s\-\(\)]{7,20}"
+      title="7–20 digits, spaces, +, - and parentheses allowed"
+      autocomplete="tel"
+    >
+    <span class="cf-hint">Optional. Include country code for international numbers.</span>
+  </div>
+
+  <div class="cf-field">
+    <label for="subject">Subject <span class="req" aria-hidden="true">*</span></label>
+    <select id="subject" name="subject" required>
+      <option value="" disabled selected>Select a topic…</option>
+      <option value="general">General enquiry</option>
+      <option value="support">Technical support</option>
+      <option value="billing">Billing &amp; payments</option>
+      <option value="partnership">Partnership</option>
+      <option value="other">Other</option>
+    </select>
+  </div>
+
+  <div class="cf-field">
+    <label for="message">Message <span class="req" aria-hidden="true">*</span></label>
+    <textarea
+      id="message"
+      name="message"
+      placeholder="Describe how we can help you…"
+      required
+      minlength="20"
+      maxlength="1000"
+    ></textarea>
+    <span class="cf-hint">Minimum 20 characters.</span>
+  </div>
+
+  <hr class="cf-divider">
+
+  <div class="cf-footer">
+    <span class="cf-badge">
+      <i class="ti ti-shield-check" aria-hidden="true"></i>
+      HTML5 validation — no JS
+    </span>
+    <button type="submit" class="cf-submit">Send message</button>
+  </div>
+
+</form>

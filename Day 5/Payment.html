@@ -1,0 +1,311 @@
+<h2 class="sr-only">Credit card payment input form with real-time formatting and 16-digit validation</h2>
+
+<style>
+  .cc-wrap { max-width: 480px; margin: 2rem auto; font-family: var(--font-sans); }
+  .card-preview {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    border-radius: 16px;
+    padding: 28px 28px 24px;
+    color: #fff;
+    margin-bottom: 28px;
+    position: relative;
+    overflow: hidden;
+    min-height: 180px;
+  }
+  .card-preview::before {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 180px; height: 180px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.04);
+  }
+  .card-preview::after {
+    content: '';
+    position: absolute;
+    bottom: -60px; left: 60px;
+    width: 220px; height: 220px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.03);
+  }
+  .card-chip {
+    width: 38px; height: 28px;
+    background: linear-gradient(135deg, #d4a843 0%, #f0c060 40%, #b8922d 100%);
+    border-radius: 5px;
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 1;
+  }
+  .card-chip::after {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 18px; height: 14px;
+    border: 1px solid rgba(0,0,0,0.25);
+    border-radius: 2px;
+  }
+  .card-number-preview {
+    font-size: 20px;
+    letter-spacing: 3px;
+    font-family: var(--font-mono);
+    color: rgba(255,255,255,0.9);
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 1;
+  }
+  .card-bottom { display: flex; justify-content: space-between; align-items: flex-end; position: relative; z-index: 1; }
+  .card-label { font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; color: rgba(255,255,255,0.5); margin-bottom: 3px; }
+  .card-value { font-size: 14px; color: rgba(255,255,255,0.85); font-weight: 500; }
+  .card-network {
+    width: 46px; height: 30px;
+    position: relative;
+    display: flex; align-items: center;
+  }
+  .card-network .circle {
+    width: 28px; height: 28px; border-radius: 50%; position: absolute;
+  }
+  .circle-l { background: rgba(235,0,27,0.85); left: 0; }
+  .circle-r { background: rgba(255,165,0,0.75); left: 16px; }
+
+  .form-section {
+    background: var(--color-background-primary);
+    border: 0.5px solid var(--color-border-tertiary);
+    border-radius: var(--border-radius-lg);
+    padding: 24px;
+  }
+  .field { margin-bottom: 18px; }
+  .field:last-of-type { margin-bottom: 0; }
+  .field label { display: block; font-size: 12px; font-weight: 500; color: var(--color-text-secondary); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 7px; }
+  .field input {
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 15px;
+    font-family: var(--font-mono);
+    padding: 10px 14px;
+    border: 0.5px solid var(--color-border-secondary);
+    border-radius: var(--border-radius-md);
+    background: var(--color-background-secondary);
+    color: var(--color-text-primary);
+    outline: none;
+    transition: border-color 0.15s;
+    height: 44px;
+  }
+  .field input:focus { border-color: #378ADD; box-shadow: 0 0 0 3px rgba(55,138,221,0.12); }
+  .field input.error { border-color: #E24B4A; box-shadow: 0 0 0 3px rgba(226,75,74,0.12); }
+  .field input.valid { border-color: #1D9E75; }
+  .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .error-msg { font-size: 12px; color: #E24B4A; margin-top: 5px; display: none; }
+  .error-msg.show { display: block; }
+
+  .submit-btn {
+    width: 100%;
+    margin-top: 22px;
+    padding: 13px;
+    border-radius: var(--border-radius-md);
+    border: none;
+    background: #0f3460;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    letter-spacing: 0.3px;
+    transition: background 0.15s, transform 0.1s;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+  }
+  .submit-btn:hover { background: #185FA5; }
+  .submit-btn:active { transform: scale(0.98); }
+  .submit-btn:disabled { background: var(--color-background-secondary); color: var(--color-text-secondary); cursor: not-allowed; transform: none; border: 0.5px solid var(--color-border-tertiary); }
+
+  .success-banner {
+    background: var(--color-background-primary);
+    border: 0.5px solid #1D9E75;
+    border-radius: var(--border-radius-md);
+    padding: 14px 16px;
+    margin-top: 18px;
+    display: none;
+    align-items: center; gap: 10px;
+    font-size: 14px; color: #0F6E56;
+  }
+  .success-banner.show { display: flex; }
+  .success-banner i { font-size: 20px; color: #1D9E75; }
+</style>
+
+<div class="cc-wrap">
+  <div class="card-preview">
+    <div class="card-chip"></div>
+    <div class="card-number-preview" id="preview-number">•••• •••• •••• ••••</div>
+    <div class="card-bottom">
+      <div>
+        <div class="card-label">Card holder</div>
+        <div class="card-value" id="preview-name">Full Name</div>
+      </div>
+      <div>
+        <div class="card-label">Expires</div>
+        <div class="card-value" id="preview-expiry">MM/YY</div>
+      </div>
+      <div class="card-network">
+        <div class="circle circle-l"></div>
+        <div class="circle circle-r"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-section">
+    <div class="field">
+      <label for="card-number">Card number</label>
+      <input type="text" id="card-number" placeholder="0000 0000 0000 0000" maxlength="19" inputmode="numeric" autocomplete="cc-number">
+      <div class="error-msg" id="num-error">Please enter a valid 16-digit card number.</div>
+    </div>
+
+    <div class="field">
+      <label for="card-name">Card holder name</label>
+      <input type="text" id="card-name" placeholder="e.g. Jane Smith" autocomplete="cc-name" style="font-family: var(--font-sans);">
+    </div>
+
+    <div class="field-row">
+      <div class="field">
+        <label for="card-expiry">Expiry date</label>
+        <input type="text" id="card-expiry" placeholder="MM/YY" maxlength="5" inputmode="numeric" autocomplete="cc-exp">
+        <div class="error-msg" id="exp-error">Enter a valid expiry (MM/YY).</div>
+      </div>
+      <div class="field">
+        <label for="card-cvv">CVV</label>
+        <input type="password" id="card-cvv" placeholder="•••" maxlength="4" inputmode="numeric" autocomplete="cc-csc">
+        <div class="error-msg" id="cvv-error">CVV must be 3–4 digits.</div>
+      </div>
+    </div>
+
+    <button class="submit-btn" id="submit-btn" disabled>
+      <i class="ti ti-lock" aria-hidden="true"></i>
+      Pay securely
+    </button>
+
+    <div class="success-banner" id="success-banner">
+      <i class="ti ti-circle-check" aria-hidden="true"></i>
+      Payment details validated successfully!
+    </div>
+  </div>
+</div>
+
+<script>
+const numInput = document.getElementById('card-number');
+const nameInput = document.getElementById('card-name');
+const expiryInput = document.getElementById('card-expiry');
+const cvvInput = document.getElementById('card-cvv');
+const submitBtn = document.getElementById('submit-btn');
+const successBanner = document.getElementById('success-banner');
+
+const previewNum = document.getElementById('preview-number');
+const previewName = document.getElementById('preview-name');
+const previewExpiry = document.getElementById('preview-expiry');
+
+numInput.addEventListener('input', function(e) {
+  let raw = this.value.replace(/\D/g, '').slice(0, 16);
+  let formatted = raw.match(/.{1,4}/g)?.join(' ') || '';
+  this.value = formatted;
+
+  let display = raw.padEnd(16, '•');
+  previewNum.textContent = display.match(/.{1,4}/g).join(' ');
+
+  validateNumber();
+  updateSubmit();
+});
+
+numInput.addEventListener('blur', validateNumber);
+
+function validateNumber() {
+  const raw = numInput.value.replace(/\s/g, '');
+  const errEl = document.getElementById('num-error');
+  if (raw.length > 0 && raw.length < 16) {
+    numInput.classList.add('error'); numInput.classList.remove('valid');
+    errEl.classList.add('show');
+  } else if (raw.length === 16) {
+    numInput.classList.remove('error'); numInput.classList.add('valid');
+    errEl.classList.remove('show');
+  } else {
+    numInput.classList.remove('error', 'valid');
+    errEl.classList.remove('show');
+  }
+}
+
+nameInput.addEventListener('input', function() {
+  previewName.textContent = this.value.trim() || 'Full Name';
+  updateSubmit();
+});
+
+expiryInput.addEventListener('input', function() {
+  let raw = this.value.replace(/\D/g, '').slice(0, 4);
+  if (raw.length >= 2) raw = raw.slice(0,2) + '/' + raw.slice(2);
+  this.value = raw;
+  previewExpiry.textContent = raw || 'MM/YY';
+  validateExpiry();
+  updateSubmit();
+});
+expiryInput.addEventListener('blur', validateExpiry);
+
+function validateExpiry() {
+  const val = expiryInput.value;
+  const errEl = document.getElementById('exp-error');
+  const match = val.match(/^(\d{2})\/(\d{2})$/);
+  if (!match && val.length > 0) {
+    expiryInput.classList.add('error'); expiryInput.classList.remove('valid');
+    errEl.classList.add('show');
+    return false;
+  }
+  if (match) {
+    const mo = parseInt(match[1]); const yr = parseInt('20' + match[2]);
+    const now = new Date(); const nowMo = now.getMonth() + 1; const nowYr = now.getFullYear();
+    if (mo < 1 || mo > 12 || yr < nowYr || (yr === nowYr && mo < nowMo)) {
+      expiryInput.classList.add('error'); expiryInput.classList.remove('valid');
+      errEl.classList.add('show'); return false;
+    }
+    expiryInput.classList.remove('error'); expiryInput.classList.add('valid');
+    errEl.classList.remove('show');
+  } else {
+    expiryInput.classList.remove('error', 'valid'); errEl.classList.remove('show');
+  }
+  return true;
+}
+
+cvvInput.addEventListener('input', function() {
+  this.value = this.value.replace(/\D/g, '').slice(0, 4);
+  validateCvv();
+  updateSubmit();
+});
+cvvInput.addEventListener('blur', validateCvv);
+
+function validateCvv() {
+  const v = cvvInput.value; const errEl = document.getElementById('cvv-error');
+  if (v.length > 0 && (v.length < 3)) {
+    cvvInput.classList.add('error'); cvvInput.classList.remove('valid');
+    errEl.classList.add('show');
+  } else if (v.length >= 3) {
+    cvvInput.classList.remove('error'); cvvInput.classList.add('valid');
+    errEl.classList.remove('show');
+  } else {
+    cvvInput.classList.remove('error', 'valid'); errEl.classList.remove('show');
+  }
+}
+
+function isFormValid() {
+  const num = numInput.value.replace(/\s/g, '');
+  const name = nameInput.value.trim();
+  const expiry = expiryInput.value.match(/^(\d{2})\/(\d{2})$/);
+  const cvv = cvvInput.value;
+  return num.length === 16 && name.length > 1 && expiry && cvv.length >= 3;
+}
+
+function updateSubmit() {
+  submitBtn.disabled = !isFormValid();
+  if (isFormValid()) submitBtn.style.background = '';
+}
+
+submitBtn.addEventListener('click', function() {
+  if (!isFormValid()) return;
+  successBanner.classList.add('show');
+  submitBtn.disabled = true;
+  submitBtn.innerHTML = '<i class="ti ti-circle-check" aria-hidden="true"></i> Payment accepted';
+  submitBtn.style.background = '#0F6E56';
+});
+</script>

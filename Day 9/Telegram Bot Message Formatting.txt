@@ -1,0 +1,70 @@
+Telegram Bot Message Formatting
+Telegram supports two parse modes: MarkdownV2 and HTML. Here's a complete reference:
+Parse Modes
+Feature
+MarkdownV2
+HTML
+Bold
+*bold*
+<b>bold</b>
+Italic
+_italic_
+<i>italic</i>
+Bold+Italic
+*_bold italic_*
+<b><i>bold italic</i></b>
+Underline
+__underline__
+<u>underline</u>
+Strikethrough
+~strike~
+<s>strike</s>
+Inline code
+`code`
+<code>code</code>
+Code block
+```code block```
+<pre>code block</pre>
+Spoiler
+||spoiler||
+<tg-spoiler>spoiler</tg-spoiler>
+Link
+[text](https://url.com)
+<a href="https://url.com">text</a>
+JSON Payload Structure
+Using MarkdownV2:
+{
+  "chat_id": "123456789",
+  "text": "*Bold text* 🔥\n_Italic text_ ✅\n*_Bold and italic_* 🎯\n__Underline__ 💡\n~Strikethrough~ ❌\n`inline code`\n```\ncode block\n```\n||Spoiler content|| 👀",
+  "parse_mode": "MarkdownV2"
+}
+Using HTML:
+{
+  "chat_id": "123456789",
+  "text": "<b>Bold text</b> 🔥\n<i>Italic text</i> ✅\n<b><i>Bold and italic</i></b> 🎯\n<u>Underline</u> 💡\n<s>Strikethrough</s> ❌\n<code>inline code</code>\n<pre>code block</pre>\n<tg-spoiler>Spoiler content</tg-spoiler> 👀",
+  "parse_mode": "HTML"
+}
+Full API Request Example (sendMessage)
+POST https://api.telegram.org/bot<YOUR_BOT_TOKEN>/sendMessage
+
+{
+  "chat_id": "123456789",
+  "text": "👋 *Hello there\!*\n\n_Welcome_ to our bot 🤖\n\n*Features:*\n• ✅ Feature one\n• 🔥 Feature two\n• 💡 Feature three\n\n_Thank you for joining us\!_ 🎉",
+  "parse_mode": "MarkdownV2",
+  "disable_web_page_preview": true,
+  "disable_notification": false
+}
+⚠️ MarkdownV2 Special Characters — Must Be Escaped
+In MarkdownV2, these characters must be escaped with a backslash when used as plain text (not as formatting):
+. ! ( ) [ ] { } - + = # | > ~  `  *  _
+Example: Hello world\! → displays as Hello world!
+Emojis
+Just paste emojis directly into the text field — no special encoding needed:
+{
+  "chat_id": "123456789",
+  "text": "🚀 Launch confirmed\! 🎉\n✅ _All systems go_\n🔥 *Let's go\!*",
+  "parse_mode": "MarkdownV2"
+}
+
+💡 Recommendation
+Use HTML mode if you find MarkdownV2 escaping cumbersome — it's more predictable and easier to build dynamically in code, since you only need to escape <, >, and & in plain text content.

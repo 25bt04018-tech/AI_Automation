@@ -1,0 +1,32 @@
+[
+  {
+    "empId": "EMP-001",
+    "name": "Priya Sharma",
+    "department": "Engineering",
+    "salary": 95000
+  },
+  {
+    "empId": "EMP-002",
+    "name": "Marcus Chen",
+    "department": "Product",
+    "salary": 88000
+  },
+  {
+    "empId": "EMP-003",
+    "name": "Aisha Patel",
+    "department": "Design",
+    "salary": 82000
+  },
+  {
+    "empId": "EMP-004",
+    "name": "Jordan Rivera",
+    "department": "Marketing",
+    "salary": 74000
+  },
+  {
+    "empId": "EMP-005",
+    "name": "Lena Müller",
+    "department": "Finance",
+    "salary": 91000
+  }
+]

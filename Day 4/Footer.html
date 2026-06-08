@@ -1,0 +1,308 @@
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=DM+Sans:wght@300;400;500&display=swap');
+  :root {
+    --ink: #0e0e0e;
+    --muted: #5a5a5a;
+    --rule: rgba(0,0,0,0.10);
+    --accent: #c8502a;
+    --accent-hover: #a33f1f;
+    --surface: #f6f4f0;
+    --input-bg: #fff;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --ink: #f0ede8;
+      --muted: #9a9690;
+      --rule: rgba(255,255,255,0.10);
+      --accent: #e0714a;
+      --accent-hover: #c85a35;
+      --surface: #1a1917;
+      --input-bg: #25231f;
+    }
+  }
+  .ft-root {
+    background: var(--surface);
+    font-family: 'DM Sans', sans-serif;
+    color: var(--ink);
+    padding: 0;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .ft-top {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 0;
+    border-bottom: 0.5px solid var(--rule);
+  }
+  .ft-col {
+    padding: 2.5rem 2rem 2rem;
+    border-right: 0.5px solid var(--rule);
+  }
+  .ft-col:last-child { border-right: none; }
+  .ft-brand { display: flex; flex-direction: column; gap: 1.2rem; }
+  .ft-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: -0.5px;
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .ft-logo-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+    display: inline-block;
+    flex-shrink: 0;
+  }
+  .ft-tagline {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.7;
+    max-width: 240px;
+    font-weight: 300;
+  }
+  .ft-social {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 0.25rem;
+  }
+  .ft-social a {
+    width: 36px; height: 36px;
+    border: 0.5px solid var(--rule);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--muted);
+    text-decoration: none;
+    transition: border-color 0.2s, color 0.2s, background 0.2s;
+    font-size: 15px;
+  }
+  .ft-social a:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: rgba(200,80,42,0.06);
+  }
+  .ft-col-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 1.2rem;
+  }
+  .ft-links {
+    list-style: none;
+    margin: 0; padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+  .ft-links a {
+    font-size: 14px;
+    color: var(--ink);
+    text-decoration: none;
+    font-weight: 300;
+    transition: color 0.15s;
+    display: inline-block;
+  }
+  .ft-links a:hover { color: var(--accent); }
+  .ft-newsletter {
+    background: var(--surface);
+    border-top: 0.5px solid var(--rule);
+    padding: 2rem 2rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    align-items: center;
+    border-bottom: 0.5px solid var(--rule);
+  }
+  .ft-nl-heading {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 0.4rem;
+    color: var(--ink);
+  }
+  .ft-nl-sub {
+    font-size: 13px;
+    color: var(--muted);
+    font-weight: 300;
+    line-height: 1.6;
+  }
+  .ft-nl-form {
+    display: flex;
+    gap: 0;
+    border: 0.5px solid var(--rule);
+    border-radius: 4px;
+    overflow: hidden;
+    background: var(--input-bg);
+    transition: border-color 0.2s;
+  }
+  .ft-nl-form:focus-within { border-color: var(--accent); }
+  .ft-nl-form input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    padding: 0.8rem 1rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    color: var(--ink);
+    outline: none;
+    min-width: 0;
+  }
+  .ft-nl-form input::placeholder { color: var(--muted); }
+  .ft-nl-form button {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    padding: 0.8rem 1.3rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.2s;
+    letter-spacing: 0.02em;
+  }
+  .ft-nl-form button:hover { background: var(--accent-hover); }
+  .ft-privacy {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 0.5rem;
+    font-weight: 300;
+  }
+  .ft-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.2rem 2rem;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .ft-copy {
+    font-size: 12px;
+    color: var(--muted);
+    font-weight: 300;
+  }
+  .ft-legal {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+  .ft-legal a {
+    font-size: 12px;
+    color: var(--muted);
+    text-decoration: none;
+    font-weight: 300;
+    transition: color 0.15s;
+  }
+  .ft-legal a:hover { color: var(--accent); }
+  .ft-made {
+    font-size: 12px;
+    color: var(--muted);
+    font-weight: 300;
+  }
+  .ft-made span { color: var(--accent); }
+
+  @media (max-width: 700px) {
+    .ft-top {
+      grid-template-columns: 1fr 1fr;
+    }
+    .ft-col { border-right: none; border-bottom: 0.5px solid var(--rule); }
+    .ft-col:nth-child(1) { grid-column: 1 / -1; }
+    .ft-col:nth-child(2), .ft-col:nth-child(3) { border-right: 0.5px solid var(--rule); }
+    .ft-col:last-child { border-right: none; }
+    .ft-newsletter { grid-template-columns: 1fr; gap: 1.2rem; }
+    .ft-bottom { flex-direction: column; align-items: flex-start; gap: 0.6rem; }
+    .ft-col { padding: 1.5rem 1.25rem 1.25rem; }
+  }
+  @media (max-width: 420px) {
+    .ft-top { grid-template-columns: 1fr; }
+    .ft-col:nth-child(2), .ft-col:nth-child(3) { border-right: none; }
+    .ft-nl-form button { padding: 0.8rem 0.9rem; font-size: 12px; }
+    .ft-newsletter { padding: 1.5rem 1.25rem; }
+    .ft-bottom { padding: 1rem 1.25rem; }
+  }
+</style>
+
+<footer class="ft-root" role="contentinfo">
+  <h2 class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;">Site footer with links, newsletter signup, and social media</h2>
+
+  <div class="ft-top">
+    <div class="ft-col ft-brand">
+      <div class="ft-logo"><span class="ft-logo-dot"></span>Meridian</div>
+      <p class="ft-tagline">A studio for thoughtful design and digital craft. We make things that last.</p>
+      <div class="ft-social" role="list" aria-label="Social media links">
+        <a href="#" role="listitem" aria-label="Twitter / X"><i class="ti ti-brand-x" aria-hidden="true"></i></a>
+        <a href="#" role="listitem" aria-label="Instagram"><i class="ti ti-brand-instagram" aria-hidden="true"></i></a>
+        <a href="#" role="listitem" aria-label="LinkedIn"><i class="ti ti-brand-linkedin" aria-hidden="true"></i></a>
+        <a href="#" role="listitem" aria-label="GitHub"><i class="ti ti-brand-github" aria-hidden="true"></i></a>
+        <a href="#" role="listitem" aria-label="Dribbble"><i class="ti ti-brand-dribbble" aria-hidden="true"></i></a>
+        <a href="#" role="listitem" aria-label="YouTube"><i class="ti ti-brand-youtube" aria-hidden="true"></i></a>
+      </div>
+    </div>
+
+    <div class="ft-col">
+      <p class="ft-col-title">Studio</p>
+      <ul class="ft-links">
+        <li><a href="#">About us</a></li>
+        <li><a href="#">Our work</a></li>
+        <li><a href="#">Services</a></li>
+        <li><a href="#">Process</a></li>
+        <li><a href="#">Clients</a></li>
+      </ul>
+    </div>
+
+    <div class="ft-col">
+      <p class="ft-col-title">Resources</p>
+      <ul class="ft-links">
+        <li><a href="#">Journal</a></li>
+        <li><a href="#">Case studies</a></li>
+        <li><a href="#">Open source</a></li>
+        <li><a href="#">Toolkit</a></li>
+        <li><a href="#">Newsletter archive</a></li>
+      </ul>
+    </div>
+
+    <div class="ft-col">
+      <p class="ft-col-title">Contact</p>
+      <ul class="ft-links">
+        <li><a href="#">hello@meridian.co</a></li>
+        <li><a href="#">New business</a></li>
+        <li><a href="#">Press</a></li>
+        <li><a href="#">Careers</a></li>
+        <li><a href="#">Support</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="ft-newsletter">
+    <div>
+      <p class="ft-nl-heading">Stay in the loop</p>
+      <p class="ft-nl-sub">Occasional notes on design, craft, and things worth reading. No noise, unsubscribe anytime.</p>
+    </div>
+    <div>
+      <div class="ft-nl-form" role="search">
+        <input type="email" placeholder="your@email.com" aria-label="Email address for newsletter" />
+        <button type="button" aria-label="Subscribe to newsletter">Subscribe →</button>
+      </div>
+      <p class="ft-privacy">No spam. We respect your privacy.</p>
+    </div>
+  </div>
+
+  <div class="ft-bottom">
+    <p class="ft-copy">© 2026 Meridian Studio. All rights reserved.</p>
+    <nav class="ft-legal" aria-label="Legal links">
+      <a href="#">Privacy policy</a>
+      <a href="#">Terms of use</a>
+      <a href="#">Cookie settings</a>
+      <a href="#">Accessibility</a>
+    </nav>
+    <p class="ft-made">Made with <span>♥</span> somewhere nice</p>
+  </div>
+</footer>

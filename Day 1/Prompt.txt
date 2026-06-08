@@ -1,0 +1,70 @@
+“Act as a technical tutor. Explain the core logic of [ Constructor] using very simple English suitable for a  
+beginner. Provide a short, functional code snippet that 
+demonstrates this concept, and add a single-line comment 
+to every single line explaining what that specific instruction 
+does.”
+
+## Constructor (Beginner-Friendly Explanation)
+
+A **constructor** is a special function (method) inside a class that runs **automatically when an object is created**.
+
+### Why do we use a constructor?
+
+* To give initial values to an object.
+* To save time by setting up the object automatically.
+* To make object creation easier and cleaner.
+
+### Simple Example
+
+Imagine you buy a new mobile phone. When you turn it on for the first time, some basic settings are already configured. A constructor works similarly—it prepares the object when it is created.
+
+---
+
+## Java Program: Constructor Example
+
+```java
+// Define a class named Student
+class Student {
+
+    // Declare a variable to store the student's name
+    String name;
+
+    // Constructor of the Student class
+    Student() {
+
+        // Assign a default value to the name variable
+        name = "Pranav";
+    }
+
+    // Method to display the student's name
+    void display() {
+
+        // Print the value stored in name
+        System.out.println("Student Name: " + name);
+    }
+}
+
+// Main class where program execution starts
+public class Main {
+
+    // Main method of the program
+    public static void main(String[] args) {
+
+        // Create an object of Student class
+        Student s1 = new Student();
+
+        // Call the display method using the object
+        s1.display();
+    }
+}
+```
+
+### Output
+
+```text
+Student Name: Pranav
+```
+
+### Core Logic in One Line
+
+**A constructor is a special method that automatically runs when an object is created and is used to initialize the object's data.**

@@ -1,0 +1,241 @@
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;700&family=DM+Mono:wght@400;500&display=swap');
+
+.pricing-root {
+  padding: 2rem 0;
+  font-family: 'Syne', var(--font-sans);
+}
+.pricing-eyebrow {
+  font-size: 11px;
+  font-family: 'DM Mono', var(--font-mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+  margin: 0 0 0.5rem;
+}
+.pricing-headline {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin: 0 0 0.25rem;
+}
+.pricing-sub {
+  font-size: 14px;
+  color: var(--color-text-secondary);
+  margin: 0 0 2rem;
+}
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-rows: auto;
+  gap: 16px;
+}
+.card {
+  display: grid;
+  grid-template-rows: auto auto 1fr auto;
+  background: var(--color-background-primary);
+  border: 0.5px solid var(--color-border-tertiary);
+  border-radius: var(--border-radius-lg);
+  padding: 1.5rem;
+  position: relative;
+  overflow: hidden;
+  cursor: default;
+  transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  pointer-events: none;
+}
+.card:hover {
+  transform: translateY(-6px) scale(1.015);
+}
+.card.basic:hover { border-color: #9FE1CB; }
+.card.basic::before { background: linear-gradient(135deg, #E1F5EE 0%, transparent 60%); }
+.card.basic:hover::before { opacity: 1; }
+.card.pro {
+  border: 2px solid var(--color-border-info);
+}
+.card.pro:hover { border-color: #85B7EB; }
+.card.pro::before { background: linear-gradient(135deg, #E6F1FB 0%, transparent 60%); }
+.card.pro:hover::before { opacity: 1; }
+.card.enterprise:hover { border-color: #AFA9EC; }
+.card.enterprise::before { background: linear-gradient(135deg, #EEEDFE 0%, transparent 60%); }
+.card.enterprise:hover::before { opacity: 1; }
+
+.popular-badge {
+  display: inline-block;
+  font-size: 11px;
+  font-family: 'DM Mono', var(--font-mono);
+  background: var(--color-background-info);
+  color: var(--color-text-info);
+  padding: 3px 10px;
+  border-radius: var(--border-radius-md);
+  margin-bottom: 12px;
+  letter-spacing: 0.04em;
+}
+.card-tier {
+  font-size: 11px;
+  font-family: 'DM Mono', var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin: 0 0 8px;
+}
+.card.basic .card-tier { color: #0F6E56; }
+.card.pro .card-tier { color: #185FA5; }
+.card.enterprise .card-tier { color: #534AB7; }
+
+.card-price {
+  margin: 0 0 4px;
+}
+.card-price .amount {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  line-height: 1;
+}
+.card-price .period {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  margin-left: 2px;
+}
+.card-desc {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  margin: 0 0 1.25rem;
+  line-height: 1.5;
+}
+.divider {
+  height: 0.5px;
+  background: var(--color-border-tertiary);
+  margin: 0 0 1.25rem;
+  grid-column: 1 / -1;
+}
+.feature-list {
+  list-style: none;
+  margin: 0 0 1.5rem;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+.feature-list li {
+  display: grid;
+  grid-template-columns: 18px 1fr;
+  align-items: start;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--color-text-primary);
+  line-height: 1.4;
+}
+.feature-list li .icon {
+  color: var(--color-text-success);
+  font-size: 15px;
+  margin-top: 1px;
+}
+.card.enterprise .feature-list li .icon { color: #534AB7; }
+
+.cta-btn {
+  display: block;
+  width: 100%;
+  padding: 10px 0;
+  border-radius: var(--border-radius-md);
+  font-size: 13px;
+  font-family: 'Syne', var(--font-sans);
+  font-weight: 500;
+  cursor: pointer;
+  text-align: center;
+  border: 0.5px solid var(--color-border-secondary);
+  background: transparent;
+  color: var(--color-text-primary);
+  transition: background 0.15s ease, color 0.15s ease, transform 0.1s ease;
+  letter-spacing: 0.02em;
+  box-sizing: border-box;
+}
+.cta-btn:hover { background: var(--color-background-secondary); }
+.cta-btn:active { transform: scale(0.98); }
+.card.pro .cta-btn {
+  background: #185FA5;
+  color: #E6F1FB;
+  border-color: transparent;
+}
+.card.pro .cta-btn:hover { background: #0C447C; }
+</style>
+
+<h2 class="sr-only">Three-tier pricing table: Basic, Pro, and Enterprise plans</h2>
+
+<div class="pricing-root">
+  <p class="pricing-eyebrow">Pricing</p>
+  <h2 class="pricing-headline">Plans that scale with you</h2>
+  <p class="pricing-sub">Start free, upgrade when you're ready.</p>
+
+  <div class="pricing-grid">
+
+    <div class="card basic" role="article" aria-label="Basic plan">
+      <div>
+        <p class="card-tier">Basic</p>
+        <div class="card-price">
+          <span class="amount">$0</span>
+          <span class="period">/ month</span>
+        </div>
+        <p class="card-desc">For individuals exploring core features at no cost.</p>
+      </div>
+      <div style="height:0.5px;background:var(--color-border-tertiary);margin:0 0 1.25rem;"></div>
+      <ul class="feature-list">
+        <li><i class="ti ti-check icon" aria-hidden="true"></i><span>3 projects</span></li>
+        <li><i class="ti ti-check icon" aria-hidden="true"></i><span>1 GB storage</span></li>
+        <li><i class="ti ti-check icon" aria-hidden="true"></i><span>Community support</span></li>
+        <li><i class="ti ti-check icon" aria-hidden="true"></i><span>Basic analytics</span></li>
+        <li><i class="ti ti-check icon" aria-hidden="true"></i><span>API access (100 req/day)</span></li>
+      </ul>
+      <button class="cta-btn" onclick="sendPrompt('Tell me more about the Basic plan')">Get started free ↗</button>
+    </div>
+
+    <div class="card pro" role="article" aria-label="Pro plan, most popular">
+      <div>
+        <span class="popular-badge">Most popular</span>
+        <p class="card-tier">Pro</p>
+        <div class="card-price">
+          <span class="amount">$29</span>
+          <span class="period">/ month</span>
+        </div>
+        <p class="card-desc">For growing teams that need power and collaboration.</p>
+      </div>
+      <div style="height:0.5px;background:var(--color-border-tertiary);margin:0 0 1.25rem;"></div>
+      <ul class="feature-list">
+        <li><i class="ti ti-check icon" aria-hidden="true"></i><span>Unlimited projects</span></li>
+        <li><i class="ti ti-check icon" aria-hidden="true"></i><span>50 GB storage</span></li>
+        <li><i class="ti ti-check icon" aria-hidden="true"></i><span>Priority email support</span></li>
+        <li><i class="ti ti-check icon" aria-hidden="true"></i><span>Advanced analytics + exports</span></li>
+        <li><i class="ti ti-check icon" aria-hidden="true"></i><span>API access (10k req/day)</span></li>
+        <li><i class="ti ti-check icon" aria-hidden="true"></i><span>Team workspaces (up to 10)</span></li>
+      </ul>
+      <button class="cta-btn" onclick="sendPrompt('Tell me more about the Pro plan')">Start Pro trial ↗</button>
+    </div>
+
+    <div class="card enterprise" role="article" aria-label="Enterprise plan">
+      <div>
+        <p class="card-tier">Enterprise</p>
+        <div class="card-price">
+          <span class="amount">Custom</span>
+        </div>
+        <p class="card-desc">For organizations needing security, scale, and SLAs.</p>
+      </div>
+      <div style="height:0.5px;background:var(--color-border-tertiary);margin:0 0 1.25rem;"></div>
+      <ul class="feature-list">
+        <li><i class="ti ti-check icon" aria-hidden="true"></i><span>Everything in Pro</span></li>
+        <li><i class="ti ti-check icon" aria-hidden="true"></i><span>Unlimited storage</span></li>
+        <li><i class="ti ti-check icon" aria-hidden="true"></i><span>Dedicated success manager</span></li>
+        <li><i class="ti ti-check icon" aria-hidden="true"></i><span>SSO + SAML + SCIM</span></li>
+        <li><i class="ti ti-check icon" aria-hidden="true"></i><span>Unlimited API access</span></li>
+        <li><i class="ti ti-check icon" aria-hidden="true"></i><span>99.99% uptime SLA</span></li>
+        <li><i class="ti ti-check icon" aria-hidden="true"></i><span>Custom contract & invoicing</span></li>
+      </ul>
+      <button class="cta-btn" onclick="sendPrompt('Tell me more about the Enterprise plan')">Contact sales ↗</button>
+    </div>
+
+  </div>
+</div>
